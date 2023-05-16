@@ -1,0 +1,15 @@
+- name: Print Hello
+  category: Print text
+  command: "print('Hello')"
+
+- name: Print Awesome
+  category: Category A
+  command: "print('Awesome')"
+
+- name: 1 + 1
+  category: Math
+  command: "print(1+1)"
+
+- name: 2 x 5
+  category: Math
+  command: "print(2*5)"
