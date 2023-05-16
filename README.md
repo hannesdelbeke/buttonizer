@@ -1,4 +1,4 @@
-# py-commander
+# buttonizer
 very hacky tool to launch py commands from configs
 
 Load YAML into buttons. Can be reused for any command 
