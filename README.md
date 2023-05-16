@@ -22,3 +22,6 @@ Load YAML into buttons. Can be reused for any command
 Python modules:
 - Pyside2
 - PyYaml
+
+### env var
+`BUTTONIZER_CONFIG_DIRS` path(s) to config folder(s), spliit by `;`

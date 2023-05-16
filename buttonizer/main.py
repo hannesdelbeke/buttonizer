@@ -1,6 +1,10 @@
-import sys
+import sys, os
 from PySide2.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QComboBox, QPushButton
 from PySide2.QtCore import Qt
+import yaml
+
+
+CONFIG_ENV_VAR = 'BUTTONIZER_CONFIG_DIRS'
 
 
 class MainWindow(QMainWindow):
@@ -9,10 +13,18 @@ class MainWindow(QMainWindow):
 
         # load config in same folder
 
-        # Open the YAML file
-        import yaml
-        with open('config.yaml', 'r') as file:
-            self.config = yaml.safe_load(file)
+        # get env var
+        env_var = os.environ.get(CONFIG_ENV_VAR)
+        if env_var:
+            config_dirs = env_var.split(";")
+        else:
+            config_dirs = ['config.yaml']
+
+        # Open the YAML file(s)
+        self.configs = []
+        for config_dir in config_dirs:
+            with open(config_dir, 'r') as file:
+                self.configs.append(yaml.safe_load(file))
 
         # Create the central widget and main layout
         central_widget = QWidget(self)
@@ -35,8 +47,15 @@ class MainWindow(QMainWindow):
         self.populate_categories()
         self.update_commands()
 
+    @property
+    def all_commands(self):
+        all_configs = []
+        for config in self.configs:
+            all_configs.extend(config)
+        return all_configs
+
     def populate_categories(self):
-        categories = set(cmd["category"] for cmd in self.config)
+        categories = set(cmd["category"] for cmd in self.all_commands)
         self.category_dropdown.addItems(sorted(categories))
 
     def update_commands(self):
@@ -48,7 +67,7 @@ class MainWindow(QMainWindow):
         selected_category = self.category_dropdown.currentText()
 
         # Add command buttons for the selected category
-        for cmd in self.config:
+        for cmd in self.all_commands:
             if cmd["category"] == selected_category:
                 button = QPushButton(cmd["name"])
                 button.clicked.connect(lambda _, command=cmd["command"]: exec(command))
