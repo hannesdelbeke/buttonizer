@@ -11,7 +11,7 @@ class MainWindow(QMainWindow):
 
         # Open the YAML file
         import yaml
-        with open('sample_config.yaml', 'r') as file:
+        with open('config.yaml', 'r') as file:
             self.config = yaml.safe_load(file)
 
         # Create the central widget and main layout
