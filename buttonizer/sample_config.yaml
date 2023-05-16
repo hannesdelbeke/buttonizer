@@ -3,7 +3,7 @@
   command: "print('Hello')"
 
 - name: Print Awesome
-  category: Category A
+  category: Print text
   command: "print('Awesome')"
 
 - name: 1 + 1

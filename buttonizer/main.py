@@ -2,17 +2,17 @@ import sys
 from PySide2.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QComboBox, QPushButton
 from PySide2.QtCore import Qt
 
-# Sample configuration file content
-config = [
-    {"name": "Command 1", "category": "Category A", "command": "print('Command 1 executed')"},
-    {"name": "Command 2", "category": "Category A", "command": "print('Command 2 executed')"},
-    {"name": "Command 3", "category": "Category B", "command": "print('Command 3 executed')"},
-    {"name": "Command 4", "category": "Category B", "command": "print('Command 4 executed')"},
-]
 
 class MainWindow(QMainWindow):
-    def __init__(self, parent, *args, **kwargs):
+    def __init__(self, parent=None, *args, **kwargs):
         super(MainWindow, self).__init__(parent, *args, **kwargs)
+
+        # load config in same folder
+
+        # Open the YAML file
+        import yaml
+        with open('sample_config.yaml', 'r') as file:
+            self.config = yaml.safe_load(file)
 
         # Create the central widget and main layout
         central_widget = QWidget(self)
@@ -36,7 +36,7 @@ class MainWindow(QMainWindow):
         self.update_commands()
 
     def populate_categories(self):
-        categories = set(cmd["category"] for cmd in config)
+        categories = set(cmd["category"] for cmd in self.config)
         self.category_dropdown.addItems(sorted(categories))
 
     def update_commands(self):
@@ -48,11 +48,19 @@ class MainWindow(QMainWindow):
         selected_category = self.category_dropdown.currentText()
 
         # Add command buttons for the selected category
-        for cmd in config:
+        for cmd in self.config:
             if cmd["category"] == selected_category:
                 button = QPushButton(cmd["name"])
                 button.clicked.connect(lambda _, command=cmd["command"]: exec(command))
                 self.commands_layout.addWidget(button)
-                
-                
-MainWindow(QApplication.instance().blender_widget).show()
+
+
+app = QApplication.instance()
+exec = 0
+if not app:
+    exec = 1
+    app = QApplication()
+widget = MainWindow()
+widget.show()
+if exec:
+    app.exec_()
