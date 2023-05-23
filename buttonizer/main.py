@@ -6,6 +6,7 @@ from pathlib import Path
 
 
 CONFIG_ENV_VAR = 'BUTTONIZER_CONFIG_DIRS'
+widget = None
 
 
 class MainWindow(QMainWindow):
@@ -81,6 +82,7 @@ class MainWindow(QMainWindow):
                 self.commands_layout.addWidget(button)
 
 def show() -> MainWindow:
+    global widget
     app = QApplication.instance()
     exec = 0
     if not app:
