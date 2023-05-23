@@ -2,6 +2,7 @@ import sys, os
 from PySide2.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QComboBox, QPushButton
 from PySide2.QtCore import Qt
 import yaml
+from pathlib import Path
 
 
 CONFIG_ENV_VAR = 'BUTTONIZER_CONFIG_DIRS'
@@ -18,12 +19,18 @@ class MainWindow(QMainWindow):
         if env_var:
             config_dirs = env_var.split(";")
         else:
-            config_dirs = ['config.yaml']
+            config_dirs = [os.path.dirname(__file__)]
+
+        # find all yamls in the dirs, with 
+        config_paths = []
+        for config_dir in config_dirs:
+            if os.path.isdir(config_dir):
+                config_paths.extend(Path(config_dir).rglob('*.yaml'))
 
         # Open the YAML file(s)
         self.configs = []
-        for config_dir in config_dirs:
-            with open(config_dir, 'r') as file:
+        for config_path in config_paths:
+            with open(config_path, 'r') as file:
                 self.configs.append(yaml.safe_load(file))
 
         # Create the central widget and main layout
