@@ -70,7 +70,7 @@ class MainWindow(QMainWindow):
         for cmd in self.all_commands:
             if cmd["category"] == selected_category:
                 button = QPushButton(cmd["name"])
-                button.clicked.connect(lambda _, command=cmd["command"]: exec(command))
+                button.clicked.connect(lambda _=None, command=cmd["command"]: exec(command))
                 self.commands_layout.addWidget(button)
 
 def show() -> MainWindow:
