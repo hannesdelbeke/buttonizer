@@ -73,13 +73,14 @@ class MainWindow(QMainWindow):
                 button.clicked.connect(lambda _, command=cmd["command"]: exec(command))
                 self.commands_layout.addWidget(button)
 
-
-app = QApplication.instance()
-exec = 0
-if not app:
-    exec = 1
-    app = QApplication()
-widget = MainWindow()
-widget.show()
-if exec:
-    app.exec_()
+def show() -> MainWindow:
+    app = QApplication.instance()
+    exec = 0
+    if not app:
+        exec = 1
+        app = QApplication()
+    widget = MainWindow()
+    widget.show()
+    if exec:
+        app.exec_()
+    return widget
