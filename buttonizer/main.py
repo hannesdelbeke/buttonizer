@@ -13,6 +13,8 @@ class MainWindow(QMainWindow):
     def __init__(self, parent=None, *args, **kwargs):
         super(MainWindow, self).__init__(parent, *args, **kwargs)
 
+        self.setObjectName("ButtonizerMainWindow")
+
         # load config in same folder
 
         # get env var
