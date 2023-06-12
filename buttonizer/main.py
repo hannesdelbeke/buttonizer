@@ -1,6 +1,6 @@
 import sys, os
 from PySide2.QtWidgets import QApplication, QPushButton, QMenu, QAction, QDialog, QLabel, QLineEdit, \
-    QMessageBox, QStyle, QMainWindow, QVBoxLayout, QWidget, QComboBox
+    QMessageBox, QStyle, QMainWindow, QVBoxLayout, QWidget, QComboBox, QDockWidget
 from PySide2.QtCore import Qt
 from PySide2.QtGui import QIcon
 import yaml
@@ -23,7 +23,7 @@ def open_config_folder(config_folder_path):
             subprocess.Popen(["xdg-open", config_folder_path])
 
 
-class MainWindow(QMainWindow):
+class MainWindow(QDockWidget):
     def __init__(self, parent=None, *args, **kwargs):
         super(MainWindow, self).__init__(parent, *args, **kwargs)
 
@@ -78,7 +78,8 @@ class MainWindow(QMainWindow):
         layout.addWidget(folder_button)
 
         # Set the central widget
-        self.setCentralWidget(central_widget)
+        # self.setCentralWidget(central_widget)
+        self.setWidget(central_widget)
 
         # Populate categories dropdown and initial commands
         self.populate_categories()
