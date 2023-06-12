@@ -1,5 +1,12 @@
 # buttonizer
-very hacky tool to launch py commands from configs
+A tool to launch py commands from configs.
+- Right click on the buttons to edit & delete the commands.
+- Left click a button to run the python command store inside
+
+```python
+import buttonizer.main
+widget = buttonizer.main.show()
+```
 
 Load YAML into buttons. Can be reused for any command 
 ```yaml
@@ -26,7 +33,7 @@ Python modules:
 ### env var
 `BUTTONIZER_CONFIG_DIRS` path(s) to config folder(s), spliit by `;`
 
-### how to use
+### setup
 - install the required packages in your python environment
 - check if the ui loads, run python code: `import buttonizer`
 - if this works, set up your own configs
