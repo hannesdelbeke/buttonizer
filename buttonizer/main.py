@@ -1,13 +1,26 @@
 import sys, os
-from PySide2.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QComboBox, QPushButton
-from PySide2.QtWidgets import QApplication, QPushButton, QMenu, QAction, QDialog, QLabel, QLineEdit, QMessageBox
+from PySide2.QtWidgets import QApplication, QPushButton, QMenu, QAction, QDialog, QLabel, QLineEdit, \
+    QMessageBox, QStyle, QMainWindow, QVBoxLayout, QWidget, QComboBox
 from PySide2.QtCore import Qt
+from PySide2.QtGui import QIcon
 import yaml
 from pathlib import Path
+import subprocess
 
 
 CONFIG_ENV_VAR = 'BUTTONIZER_CONFIG_DIRS'
 widget = None
+
+
+def open_config_folder(config_folder_path):
+    # Open folder in file explorer or file manager
+    if os.path.isdir(config_folder_path):
+        if sys.platform.startswith("win"):
+            subprocess.Popen(f'explorer "{config_folder_path}"')
+        elif sys.platform.startswith("darwin"):
+            subprocess.Popen(["open", config_folder_path])
+        elif sys.platform.startswith("linux"):
+            subprocess.Popen(["xdg-open", config_folder_path])
 
 
 class MainWindow(QMainWindow):
@@ -26,14 +39,14 @@ class MainWindow(QMainWindow):
             config_dirs = [os.path.dirname(__file__)]
 
         # find all yamls in the dirs, with 
-        config_paths = []
+        self.config_paths = []
         for config_dir in config_dirs:
             if os.path.isdir(config_dir):
-                config_paths.extend(Path(config_dir).rglob('*.yaml'))
+                self.config_paths.extend(Path(config_dir).rglob('*.yaml'))
 
         # Open the YAML file(s)
         self.configs = []
-        for config_path in config_paths:
+        for config_path in self.config_paths:
             with open(config_path, 'r') as file:
                 self.configs.append(yaml.safe_load(file))
 
@@ -46,6 +59,7 @@ class MainWindow(QMainWindow):
         self.category_dropdown.currentIndexChanged.connect(self.update_commands)
         layout.addWidget(self.category_dropdown)
 
+
         # Create command buttons container
         self.commands_container = QWidget()
         self.commands_layout = QVBoxLayout(self.commands_container)
@@ -56,12 +70,22 @@ class MainWindow(QMainWindow):
         add_command_button.clicked.connect(self.add_command)
         layout.addWidget(add_command_button)
 
+        # Add folder button
+        folder_button = QPushButton(" show config")
+        folder_button.setIcon(QApplication.style().standardIcon(QStyle.SP_DirIcon))
+        folder_button.setToolTip("Open Config Folder")
+        folder_button.clicked.connect(self.open_config_folder)
+        layout.addWidget(folder_button)
+
         # Set the central widget
         self.setCentralWidget(central_widget)
 
         # Populate categories dropdown and initial commands
         self.populate_categories()
         self.update_commands()
+
+    def open_config_folder(self):
+        open_config_folder(self.config_paths[0].parent)
 
     @property
     def all_commands(self):
