@@ -18,7 +18,7 @@ Load YAML into buttons. Can be reused for any command
   category: Math
   command: "print(2*5)"
 ```
-![](docs/screen_demo.jpg)
+![](screen_demo.jpg)
 
 ### Sample use case
 - load blender file
