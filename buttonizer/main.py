@@ -65,6 +65,8 @@ class MainWindow(QDockWidget):
         self.commands_layout = QVBoxLayout(self.commands_container)
         layout.addWidget(self.commands_container)
 
+        layout.addStretch()
+
         # Create "Add Command" button
         add_command_button = QPushButton("Add Command")
         add_command_button.clicked.connect(self.add_command)
