@@ -38,4 +38,8 @@ Python modules:
 - check if the ui loads, run python code: `import buttonizer`
 - if this works, set up your own configs
   - either modify the included `config.yaml` (easiest to start, but limited)
-  - or set `BUTTONIZER_CONFIG_DIRS` env var the path of your config folder. e.g. point it to a folder on dropbox or version control 
+  - or set `BUTTONIZER_CONFIG_DIRS` env var the path of your config folder. e.g. point it to a folder on dropbox or version control
+ 
+### similar projects
+- https://github.com/RivinHD/ScriptToButton button addon for Blender
+- Autodesk Maya's shelf 
