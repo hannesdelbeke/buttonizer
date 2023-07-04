@@ -23,7 +23,7 @@ classifiers = [
 #dynamic = ["dependencies"]
 dependencies = ['importlib-metadata; python_version<"3.7"', "PySide2", "pyyaml"]
 #dynamic = ["version"]
-version = "0.0.4"
+version = "1.0.0"
 
 #[project.optional-dependencies]
 #yaml = ["pyyaml"]
@@ -32,5 +32,4 @@ version = "0.0.4"
 #my-script = "my_package.module:function"
 
 [project.urls]
-Homepage = "https://github.com/hannesdelbeke/buttonizer"
 Source = "https://github.com/hannesdelbeke/buttonizer"
