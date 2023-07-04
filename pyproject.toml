@@ -13,7 +13,7 @@ authors = [
     {name = "Hannes"},
 ]
 description = "run py commands from buttons generated from a config"
-readme = "README.md"
+readme = "docs/README.md"
 requires-python = ">=3.4"
 keywords = ["commands", "pipeline", "tool"]
 #license = { file = "LICENSE" }
