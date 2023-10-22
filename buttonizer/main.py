@@ -105,7 +105,10 @@ class MainWindow(QDockWidget):
     def update_commands(self):
         # Clear previous command buttons
         for i in reversed(range(self.commands_layout.count())):
-            self.commands_layout.itemAt(i).widget().setParent(None)
+            widget = self.commands_layout.itemAt(i).widget()
+            widget.setParent(None)  # TODO this deletes the widget, since no reference means it gets garbage collected
+            # but BQt auto collects widgets with no parents and parents them. which causes issues
+            # widget.deleteLater()  # this doesnt work
 
         # Get selected category
         selected_category = self.category_dropdown.currentText()
